@@ -7,7 +7,8 @@ printed QR codes keep working if the hosting changes.
 ## Register (once)
 
 1. Fork https://github.com/perma-id/w3id.org on GitHub.
-2. Copy the `citl/` folder (with `.htaccess` and `README.md`) into the root of your fork.
+2. Copy `citl/.htaccess` to `ids/citl/.htaccess` in your fork (w3id keeps each identifier
+   under `ids/`; the contact details are in the file's comments).
 3. Open a pull request titled "Add citl (Computers in the Loop)". It is usually merged within a
    few days.
 4. Test: https://w3id.org/citl/ch01 should open the Chapter 1 page.
