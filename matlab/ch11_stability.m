@@ -34,14 +34,14 @@ fprintf('  stable for 0 < K < 2/T = %g\n', 2/T);
 %% Routh's array on the chapter's examples
 fprintf('\nRouth: s^4 + s^3 + 2s^2 + 3s + 2\n');
 [~, ch] = routh([1 1 2 3 2], true, 's');
-fprintf('  sign changes: %d; roots %s\n', ch, num2str(roots([1 1 2 3 2]).', 3));
+fprintf('  sign changes: %d; roots %s\n', ch, num2str(round(1e3*roots([1 1 2 3 2]).')/1e3 + 0));
 % expected: 2 sign changes (first column 1 1 -1 5 2); roots 0.33 +- 1.437j, -0.83 +- 0.482j
 
 % Gain range of s^4 + 5s^3 + 8s^2 + 6s + K: no sign change in the first column
 Kmax = edge_of(@(K) routh_changes([1 5 8 6 K]) == 0, 0.1, 12);
 fprintf('Gain range of s^4 + 5s^3 + 8s^2 + 6s + K: 0 < K < %.4f (204/25 = %.4f)\n', Kmax, 204/25);
 % expected: 8.1600 (204/25 = 8.1600)
-fprintf('  at K = 204/25 the roots on the axis: %s\n', num2str(roots([1 5 8 6 204/25]).', 3));
+fprintf('  at K = 204/25 the roots on the axis: %s\n', num2str(round(1e3*roots([1 5 8 6 204/25]).')/1e3 + 0));
 % expected: -2.5 +- 0.742j and +- 1.095j
 
 polys = {[1 0 -7 6], [1 3 4 12], [1 1 3 3 -4 -4]};
@@ -49,7 +49,7 @@ for i = 1:3
     c = polys{i};
     fprintf('Routh: [%s]\n', num2str(c));
     [~, ch] = routh(c, true, 's');
-    fprintf('  right half-plane roots: %d;  roots %s\n', ch, num2str(roots(c).', 3));
+    fprintf('  right half-plane roots: %d;  roots %s\n', ch, num2str(round(1e3*roots(c).')/1e3 + 0));
 end
 % expected:
 %   [1 0 -7 6]: zero first entry in row s^2 (eps rule); 2 right half-plane roots (-3, 2, 1)

@@ -39,7 +39,7 @@ fprintf('  G_c = 25: closed loop 25/(s^2 + %gs + 25), poles %s, wn = %g rad/s, z
 L = 0.01;                                        % keep the inductance
 motor = conv([L, R], [J, B]) + [0, 0, Kt*Km];    % (R + Ls)(Js + B) + Kt Km
 fprintf('  with L = 0.01 H: (R+Ls)(Js+B) + KtKm = %g (s^2 + %gs + %g), poles of G: 0, %s\n', ...
-        motor(1), motor(2)/motor(1), motor(3)/motor(1), num2str(roots(motor).', 4));
+        motor(1), motor(2)/motor(1), motor(3)/motor(1), num2str(round(100*roots(motor).')/100));
 % expected: 0.0005 (s^2 + 101s + 600), poles of G: 0, -94.66, -6.34
 fprintf('  equal real closed-loop poles: G_c = a^2/4 = %g\n', a^2/4);
 % expected: 9
