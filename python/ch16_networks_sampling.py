@@ -182,18 +182,47 @@ for name, edges in G5.items():
     print(f"             eigenvalues {np.round(lam, 4)}")
 
 lm = np.linspace(0.05, 10, 400)
-fig, ax = plt.subplots(figsize=(5.6, 3.8))
-ax.plot(lm, [tmax_euler(l, l) for l in lm], color=DENSE, lw=2.5, label="Euler model")
-ax.plot(lm, [tmax_exact(l, l) for l in lm], "--", color=SPARSE, lw=1.6, label="exact model")
-for name, mk in [("path", "o"), ("star", "s")]:
+MARK = {"path": "o", "ring": "^", "star": "s", "complete": "D"}
+fig = plt.figure(figsize=(7.2, 5.6))
+gs = fig.add_gridspec(2, 4, height_ratios=[1, 2.3], hspace=0.45, wspace=0.15)
+# top row: the four graphs, drawn with the same five agents
+pos = {i: (np.cos(np.pi / 2 + 2 * np.pi * i / N_AGENTS), np.sin(np.pi / 2 + 2 * np.pi * i / N_AGENTS))
+       for i in range(N_AGENTS)}
+for k, (name, edges) in enumerate(G5.items()):
+    g = fig.add_subplot(gs[0, k])
+    for i, j in edges:
+        g.plot([pos[i][0], pos[j][0]], [pos[i][1], pos[j][1]], color="0.35", lw=1.2, zorder=1)
+    deg = laplacian(edges, N_AGENTS).diagonal()
+    for i in range(N_AGENTS):
+        busiest = deg[i] == deg.max()
+        g.scatter(*pos[i], s=70, zorder=2, color=DENSE if busiest else "white", edgecolor="k", lw=1)
     l = EIG[name][-1]
-    ax.plot(l, tmax_euler(l, l), mk, color=DENSE, ms=7)
-    ax.plot(l, tmax_exact(l, l), mk, mfc="none", color=SPARSE, ms=7)
+    g.set_title(f"{name}  {MARK[name] and ''}\n{len(edges)} links, " + r"$\lambda_{\max}$" + f" = {l:.2f}\n"
+                + r"$T_{\max}$" + f" = {tmax_euler(l, l):.3f} s", fontsize=8)
+    g.plot(0, -1.55, MARK[name], color="k", ms=6, mfc="none")
+    g.set_xlim(-1.35, 1.35); g.set_ylim(-1.75, 1.3); g.set_aspect("equal"); g.axis("off")
+# bottom: the bound against the largest eigenvalue, with each graph marked
+ax = fig.add_subplot(gs[1, :])
+ax.plot(lm, [tmax_euler(l, l) for l in lm], color=DENSE, lw=2.5,
+        label="Euler model (each agent computes x + Tv)")
+ax.plot(lm, [tmax_exact(l, l) for l in lm], "--", color=SPARSE, lw=1.6,
+        label="exact model (a mass driven through a hold)")
+ax.axvline(4, color="0.6", lw=0.8, ls=":")
+ax.text(4.08, 0.05, r"$\lambda_{\max} = 4$", fontsize=8, color="0.4")
+for name, off in [("path", -0.12), ("ring", 0.12), ("star", -0.12), ("complete", 0.12)]:
+    l = EIG[name][-1]
+    ax.plot(l + off, tmax_euler(l, l), MARK[name], color=DENSE, ms=7, label=None)
+    ax.plot(l + off, tmax_exact(l, l), MARK[name], mfc="none", color=SPARSE, ms=7)
+ax.annotate("path and ring\n(same busiest agent: 2 links)", (3.62, 1.0), xytext=(0.6, 0.62),
+            fontsize=8, arrowprops=dict(arrowstyle="-", color="0.5", lw=0.6))
+ax.annotate("star and complete\n(busiest agent: 4 links)", (5.0, 0.553), xytext=(6.0, 0.75),
+            fontsize=8, arrowprops=dict(arrowstyle="-", color="0.5", lw=0.6))
 ax.set_ylim(0, 1.25)
-ax.set_xlabel("largest Laplacian eigenvalue")
-ax.set_ylabel("largest stable T")
-ax.legend()
-ax.set_title("Lx = Lv = L; circles: path and ring, squares: star and complete", fontsize=9)
+ax.set_xlabel(r"largest Laplacian eigenvalue $\lambda_{\max}$")
+ax.set_ylabel(r"largest stable period $T_{\max}$ (s)")
+ax.legend(fontsize=8, loc="upper right")
+ax.set_title(r"$L_x = L_v = L$; filled markers: Euler model, open markers: exact model;"
+             "\nred agents are the busiest (largest degree); markers at the same point are nudged apart", fontsize=8.5)
 save(fig, "ch16_tmax_vs_lmax.png")
 
 # ---------------------------------------------------------------------------------------------

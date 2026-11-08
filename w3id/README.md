@@ -1,6 +1,6 @@
 # Permanent links (w3id.org)
 
-The QR codes in the book point to `https://w3id.org/citl/chNN`. w3id.org is a free,
+The QR codes in the lecture notes point to `https://w3id.org/citl/chNN`. w3id.org is a free,
 community-run permanent-address service: it redirects to wherever the material lives now, so
 printed QR codes keep working if the hosting changes.
 
@@ -13,7 +13,7 @@ printed QR codes keep working if the hosting changes.
    few days.
 4. Test: https://w3id.org/citl/ch01 should open the Chapter 1 page.
 
-The QR codes are already printed in the book; they start working once the pull request is merged.
+The QR codes are already printed in the notes; they start working once the pull request is merged.
 
 If the site moves, edit the target addresses in `.htaccess` (another small pull request); the
-QR codes in the book do not change.
+QR codes in the notes do not change.

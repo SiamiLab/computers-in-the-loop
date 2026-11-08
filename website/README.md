@@ -1,10 +1,10 @@
 # Companion website
 
-A small static website for the book *Computers in the Loop: Digital Control from Sampling to
+A small static website for the lecture notes *Computers in the Loop: Digital Control from Sampling to
 Networked Agents*: a home page with the PDF and the chapter list, and one page per chapter with
 its notebook (in Colab, or in the browser with no login), the Python and MATLAB scripts, and a
 link for reporting a correction. Each chapter page lives at `.../chNN/`, which is where the QR
-code printed in the book points.
+code printed in the notes points.
 
 > **Status: built and checked locally only. Nothing has been published, and the deploy
 > workflow (`.github/workflows/deploy.yml`) has not been run yet.**
@@ -47,8 +47,8 @@ From this folder:
 python3 build_site.py && python3 -m http.server -d _site
 ```
 
-then open <http://localhost:8000>. The build copies the notebooks, scripts, figures and the book
-PDF into `_site/` so the download buttons work. The book PDF is taken from
+then open <http://localhost:8000>. The build copies the notebooks, scripts, figures and the notes
+PDF into `_site/` so the download buttons work. The PDF is taken from
 `../book/computers-in-the-loop.pdf`, or, if that is missing, from the compiled notes
 `../../eece5610-course-notes.pdf`. Another PDF can be given with `--book file.pdf`.
 
@@ -76,10 +76,10 @@ them.
 ## 3. Deploy with GitHub Pages
 
 The repository is the `companion/` folder: `notebooks/`, `python/`, `matlab/`, `website/`,
-`.github/`, the READMEs, and the book PDF.
+`.github/`, the READMEs, and the PDF of the notes.
 
 1. Create a public repository `computers-in-the-loop` on GitHub.
-2. Put the compiled book at `book/computers-in-the-loop.pdf` in the repository (copy
+2. Put the compiled notes at `book/computers-in-the-loop.pdf` in the repository (copy
    `eece5610-course-notes.pdf` and rename it). The workflow stops with an error if it is missing.
 3. Commit the `companion/` folder and push it to `main`. `website/_site/` is ignored by git.
 4. On GitHub: Settings, Pages, Build and deployment, Source: **GitHub Actions**.
@@ -87,16 +87,16 @@ The repository is the `companion/` folder: `notebooks/`, `python/`, `matlab/`, `
    - installs `jupyterlite-core` and `jupyterlite-pyodide-kernel`,
    - runs `jupyter lite build --contents notebooks --output-dir _site/lite`,
    - runs `build_site.py`,
-   - copies `notebooks/`, `python/`, `matlab/` and the book PDF into `_site/`,
+   - copies `notebooks/`, `python/`, `matlab/` and the PDF of the notes into `_site/`,
    - checks the links, and publishes `_site/` with `actions/upload-pages-artifact` and
      `actions/deploy-pages`.
 6. The site appears at `https://<user>.github.io/computers-in-the-loop/`.
 
 The first run of the workflow has not happened yet, so check its log on that first push.
 
-## 4. The permanent address in the book (w3id)
+## 4. The permanent address in the notes (w3id)
 
-The book prints `https://w3id.org/citl/chNN` (`w3id_prefix: "citl"`) once `\codeurl` is set in
+The notes print `https://w3id.org/citl/chNN` (`w3id_prefix: "citl"`) once `\codeurl` is set in
 `2026-fall/lectures/board-notes-preamble.tex`. To make that address forward to the site, add a
 folder `citl/` to the w3id repository (<https://github.com/perma-id/w3id.org>) by pull request,
 with this `.htaccess`:
@@ -106,5 +106,5 @@ RewriteEngine on
 RewriteRule ^(.*)$ https://<user>.github.io/computers-in-the-loop/$1 [R=302,L]
 ```
 
-Then set `\providecommand{\codeurl}{https://w3id.org/citl}` in the preamble and rebuild the book.
+Then set `\providecommand{\codeurl}{https://w3id.org/citl}` in the preamble and rebuild the notes.
 If the site ever moves, only the `.htaccess` changes; the printed QR codes keep working.

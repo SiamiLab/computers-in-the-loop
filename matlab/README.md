@@ -54,7 +54,7 @@ Each script starts with `clear` and `close all`, so run them one at a time.
 ## Notes
 
 - Where MATLAB returns roots, residues or eigenvalues in a different order from the one in
-  the book, the `% expected:` comment says so; the values are the same.
+  the notes, the `% expected:` comment says so; the values are the same.
 - The round-off noise simulation of Chapter 15 drives the filter with random inputs
   (`rng(1)`), so its simulated variances are close to, but not exactly, the values in the
   `% expected:` comments; they stay close to the formula.

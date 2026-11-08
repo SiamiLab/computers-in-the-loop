@@ -17,7 +17,7 @@ graduate course EECE 5610 Digital Control Systems.
   Journal of Control Systems*, vol. 2, pp. 464–476, 2023, doi:10.1109/OJCSYS.2023.3324274
   (open access, CC BY-NC-ND 4.0). The Chapter 16 notebook recomputes its
   results; it does not copy the paper's figures.
-- **Course slides of Prof. T. Charalambous.** The course also draws on his slides.
+- **Prof. T. Charalambous.** The author's introductory lectures also drew on his slides.
 
 All code, plots and exercise text in this repository were written for these notes. The
 mathematical models used (first-order lags, double integrators, DC motors and so on) are standard

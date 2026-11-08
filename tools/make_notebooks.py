@@ -96,9 +96,9 @@ def convert(py):
     rest = re.sub(r"\n\s*Run:.*", "", rest, flags=re.S)
     cells = [md(f"# {title}\n\n*Computers in the Loop: Digital Control from Sampling to Networked "
                 f"Agents*: EECE 5610 lecture notes prepared and revised by Milad Siami.\n\n"
-                "Course sources: Mario Sznaier's lecture notes; T. Charalambous's slides; "
-                "Phillips, Nagle and Chakrabortty, *Digital Control System Analysis and Design*, "
-                f"4th ed., Pearson (2015).\n\n{rest}\n\nRun the cells from top to bottom "
+                "Chapters 1–11 of the notes are based on the lecture notes of Prof. Mario Sznaier; "
+                "all credits are in `ATTRIBUTION.md`.\n\n"
+                f"{rest}\n\nRun the cells from top to bottom "
                 "(in Colab: *Runtime > Run all*). Figures are also saved to a `figures` folder.\n")]
     cells += [code(c) for c in split_cells(body)]
     cells += explore_cells(py)

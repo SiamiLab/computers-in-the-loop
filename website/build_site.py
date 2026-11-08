@@ -2,7 +2,7 @@
 """Build the companion website of "Computers in the Loop" from site.yml.
 
 Writes plain HTML files (no JavaScript) to _site/:
-    index.html          home page: the book, the chapters, how to use the notebooks
+    index.html          home page: the notes, the chapters, how to use the notebooks
     chNN/index.html     one page per chapter
     404.html            page-not-found page (GitHub Pages serves it)
     style.css, favicon.svg
@@ -14,7 +14,7 @@ this script with --no-copy.
 Usage:
     python3 build_site.py                    # build into website/_site
     python3 build_site.py --out ../_site     # build somewhere else
-    python3 build_site.py --book PATH.pdf    # use this PDF as the book
+    python3 build_site.py --book PATH.pdf    # use this PDF as the notes
     python3 build_site.py --no-copy          # pages only
 
 Needs only the Python standard library. PyYAML is used when installed; otherwise a small
@@ -267,7 +267,7 @@ def home_page(cfg, book):
     n_ch, n_app = len(chapters), len(cfg.get("appendices", []))
     if cfg.get("book_public", True):
         book_button = (f'<a class="btn btn-primary" href="{esc(cfg["book_pdf"])}">'
-                       f'Download the book (PDF){size}</a>')
+                       f'Download the notes (PDF){size}</a>')
     else:
         book_button = ""
     book_note = ("" if cfg.get("book_public", True) else
@@ -292,7 +292,7 @@ def home_page(cfg, book):
 
 <div class="wrap">
   <section class="prose about" aria-labelledby="about">
-    <h2 id="about">About the book</h2>
+    <h2 id="about">About these notes</h2>
 {description}
     <p><strong>What the reader needs.</strong> {rich(cfg['prerequisites'])}</p>
     <p class="credit">{rich(cfg['credit'])}</p>
@@ -503,7 +503,7 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("--config", default=str(HERE / "site.yml"))
     ap.add_argument("--out", default=str(HERE / "_site"))
-    ap.add_argument("--book", help="PDF to publish as the book (default: book_pdf in site.yml)")
+    ap.add_argument("--book", help="PDF to publish as the notes (default: book_pdf in site.yml)")
     ap.add_argument("--no-copy", action="store_true",
                     help="write the pages only; do not copy notebooks, scripts and the PDF")
     args = ap.parse_args()

@@ -16,10 +16,10 @@ repo: "computers-in-the-loop"
 branch: "main"
 # Path of the site on the server. On GitHub Pages without a custom domain it is /<repo>/.
 base_path: "/computers-in-the-loop/"
-# Permanent address printed in the book: https://w3id.org/<w3id_prefix>/chNN
+# Permanent address printed in the notes: https://w3id.org/<w3id_prefix>/chNN
 w3id_prefix: "citl"
 
-# The book PDF is not published here: it is shared with students through the course page.
+# The PDF of the notes is not published here: it is shared with students through the course page.
 book_public: false
 # If book_public is set to true: where the PDF sits in the repository and on the site.
 book_pdf: "book/computers-in-the-loop.pdf"
