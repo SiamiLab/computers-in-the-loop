@@ -1,0 +1,127 @@
+{
+  "01": {
+    "runs": [
+      {
+        "T": 0.1,
+        "pole": 0.45619225923394546,
+        "stable": true
+      },
+      {
+        "T": 0.4,
+        "pole": -0.6520131076483353,
+        "stable": true
+      },
+      {
+        "T": 0.65,
+        "pole": -1.1824046208979624,
+        "stable": false
+      }
+    ],
+    "T_limit": 0.5493061443340549,
+    "steady_output": 0.6666666666666666
+  },
+  "02": {
+    "reference_gain": 0.6428571428571428,
+    "output_disturbance_gain": 0.8928571428571428,
+    "disturbance_before_final_gain": 1.0714285714285714
+  },
+  "03": {
+    "a": 0.6,
+    "first_samples": [
+      0.0,
+      0.4,
+      0.64,
+      0.784,
+      0.8704000000000001
+    ],
+    "transform_at_z2": 0.5714285714285715,
+    "final_value_valid": true
+  },
+  "04": {
+    "first_samples": [
+      1.0,
+      1.4,
+      0.5599999999999999,
+      0.22399999999999998,
+      0.0896
+    ],
+    "energy_infinite": 3.333333333333333
+  },
+  "05": {
+    "feedthrough": 0.30000000000000004,
+    "impulse_first_value": 0.30000000000000004,
+    "maximum_realization_difference": 3.469446951953614e-18
+  },
+  "06": {
+    "fs": 12.0,
+    "samples_identical": true,
+    "max_sample_difference": 6.328271240363392e-15,
+    "values_at_1_over_48": [
+      0.9659258262890683,
+      0.25881904510252074
+    ]
+  },
+  "07": {
+    "midpoint": 0.625,
+    "true": 0.390625,
+    "zoh": 0.25,
+    "causal_FOH": 0.34375,
+    "future_interpolation": 0.40625
+  },
+  "08": {
+    "T": 0.6931471805599453,
+    "p": 0.5,
+    "numerator": [
+      0.1534264097200273,
+      0.09657359027997264
+    ],
+    "one_hold_first_samples": [
+      0.0,
+      0.1534264097200273,
+      0.4034264097200273
+    ],
+    "intermediate_hold_first_samples": [
+      0.0,
+      0.0,
+      0.25
+    ]
+  },
+  "09": {
+    "T": 0.4,
+    "tau": 0.12,
+    "p": 0.6703200460356393,
+    "b_new": 0.24421625854427453,
+    "b_old": 0.08546369542008614,
+    "dc_gain": 1.0,
+    "first_step_sample": 0.24421625854427453
+  },
+  "10": {
+    "runs": [
+      {
+        "K": 1.0,
+        "q": 0.6000000000000001,
+        "yss": 0.5,
+        "time_constant": 0.3915230377942437
+      },
+      {
+        "K": 7.0,
+        "q": -0.5999999999999996,
+        "yss": 0.875,
+        "time_constant": 0.3915230377942431
+      }
+    ],
+    "two_percent_sample_index_first_run": 8,
+    "settling_time_first_run": 1.6
+  },
+  "11": {
+    "K": 2.4,
+    "no_delay_pole": -0.7,
+    "delayed_pole_magnitude": 1.095445115010332,
+    "positive_gain_limits": [
+      3.0,
+      2.0
+    ],
+    "delay_radius_085_gain_limit": 1.4449999999999998,
+    "robust_no_delay_limit_for_p_04_065": 2.3333333333333335
+  }
+}

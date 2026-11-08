@@ -1,0 +1,245 @@
+# Settings and content for the companion website.
+# build_site.py reads this file. Paths are relative to the companion/ folder
+# (the root of the repository), and the same paths are used on the website.
+# Text markup: _T_ is printed in italics (for symbols such as T and z).
+
+title: "Computers in the Loop"
+subtitle: "Digital Control from Sampling to Networked Agents"
+author: "Milad Siami"
+position: "Associate Professor of Electrical and Computer Engineering"
+affiliation: "Northeastern University, Boston"
+email: "siami.assistant@gmail.com"
+
+# GitHub account (an organization works too).
+github_user: "SiamiLab"
+repo: "computers-in-the-loop"
+branch: "main"
+# Path of the site on the server. On GitHub Pages without a custom domain it is /<repo>/.
+base_path: "/computers-in-the-loop/"
+# Permanent address printed in the book: https://w3id.org/<w3id_prefix>/chNN
+w3id_prefix: "citl"
+
+# The book PDF is not published here: it is shared with students through the course page.
+book_public: false
+# If book_public is set to true: where the PDF sits in the repository and on the site.
+book_pdf: "book/computers-in-the-loop.pdf"
+# Used only for a local preview when book_pdf is missing (the compiled notes next to companion/).
+book_pdf_local: "../eece5610-course-notes.pdf"
+
+lead: "Analysis and design of control systems in which a digital computer closes the loop, from the sampler and the _z_-transform to networks of agents that update every _T_ seconds."
+
+description:
+  - "These notes cover the analysis and design of control systems in which a digital computer closes the loop. I wrote them for EECE 5610 Digital Control Systems, a graduate course in the Department of Electrical and Computer Engineering at Northeastern University."
+  - "One thread runs through them. A computer sees the plant only every _T_ seconds and acts on it through a hold. The sampling period _T_ is therefore a design parameter, not a detail of the implementation. Chapter 1 has a loop that works with a fast computer and fails with a slow one, and later chapters explain why. The last chapter carries the same question to networks of agents, where a denser network, with more communication links, can need faster agents."
+  - "Every chapter has a companion Python notebook that reproduces its main examples and runs in a web browser, with no installation. Change a gain or a sampling period and see what happens."
+
+prerequisites: "A first course in continuous-time feedback control: transfer functions, block diagrams, root locus and Bode plots. The Laplace transform is reviewed in Appendix A. Chapters 14 and 16 also use basic linear algebra."
+credit: "Chapters 1–11 are based on the handwritten lecture notes of Prof. Mario Sznaier."
+
+parts:
+  - first: 1
+    last: 2
+    name: "Foundations"
+    summary: "What changes when a computer closes the loop, the plant models used later, and block diagrams with Mason's gain formula."
+  - first: 3
+    last: 7
+    name: "Sampled signals"
+    summary: "The _z_-transform and its inverse, difference equations and state variables, the sampler and the starred transform, aliasing, and data holds."
+  - first: 8
+    last: 11
+    name: "Sampled-data loops"
+    summary: "Open- and closed-loop pulse transfer functions, the modified _z_-transform, time response, steady-state accuracy and stability."
+  - first: 12
+    last: 15
+    name: "Design and implementation"
+    summary: "Root locus and frequency response, controller design by emulation and directly in _z_, state-space design, and the practical side: sampling period, delay, quantization and saturation."
+  - first: 16
+    last: 16
+    name: "Networked agents"
+    summary: "How fast networked agents must update, from the stability tests of Chapter 11 and the noise analysis of Chapter 15."
+
+chapters:
+  - number: 1
+    slug: "ch01"
+    title: "Introduction to Digital Control"
+    summary: "What changes when a computer closes the loop, and a first digital design that degrades and then fails as the sampling period grows."
+    notebook: "notebooks/ch01.ipynb"
+    python: "python/ch01_laser_loop.py"
+    matlab: "matlab/ch01_laser_loop.m"
+    video: ""
+    figure: "python/figures/ch01_laser_step.png"
+    figure_alt: "Step responses of the digital laser loop for several sampling periods, next to the analog design."
+    reproduces: "The laser example: the analog integral design (a = 2, K = 1, 2% settling time 5.83 s); the same controller on a computer, simulated for _T_ = 0.1 to 2.5 s (step and disturbance peaks, size of the closed-loop roots, the limit _T_ = 4/a = 2 s); the phase margin from the delay estimate and from the sampled loop; the 12-bit quantization step."
+  - number: 2
+    slug: "ch02"
+    title: "Block Diagrams and Mason's Gain Formula"
+    summary: "A position loop for a robot arm, signal flow graphs and Mason's gain formula, and one block diagram solved both ways."
+    notebook: "notebooks/ch02.ipynb"
+    python: "python/ch02_mason.py"
+    matlab: "matlab/ch02_mason.m"
+    video: ""
+    figure: "python/figures/ch02_arm_step.png"
+    figure_alt: "Step responses of the robot-arm position loop."
+    reproduces: "The robot-arm position loop (the closed loop 25/(s² + 6s + 25) and the effect of the motor inductance); a general routine for Mason's gain formula (paths, loops, the determinant, cofactors) checked against the node equations on three examples and on the rate-feedback loop."
+  - number: 3
+    slug: "ch03"
+    title: "Discrete-Time Systems and the _z_-Transform"
+    summary: "Linear time-invariant systems and difference equations; the _z_-transform, where it converges, its shift and scaling rules, and the final value theorem."
+    notebook: "notebooks/ch03.ipynb"
+    python: "python/ch03_z_transform.py"
+    matlab: "matlab/ch03_z_transform.m"
+    video: ""
+    figure: "python/figures/ch03_position_error.png"
+    figure_alt: "Error samples of the sampled position loop for a stable and an unstable gain."
+    reproduces: "The satellite through a sample-and-hold (difference equation, θ(k) = k²/2, pulse transfer function); the _z_-transform series against closed forms inside and outside the region of convergence; the shift and scaling rules; the position loop with K = 1 (stable) and K = 3 (unstable), where the final value formula still returns 0."
+  - number: 4
+    slug: "ch04"
+    title: "Difference Equations and the Inverse _z_-Transform"
+    summary: "Convolution, difference equations and the transfer function; inverting a _z_-transform by partial fractions, power series and residues; Parseval's theorem."
+    notebook: "notebooks/ch04.ipynb"
+    python: "python/ch04_inverse_z.py"
+    matlab: "matlab/ch04_inverse_z.m"
+    video: ""
+    figure: "python/figures/ch04_convolution_parseval.png"
+    figure_alt: "A discrete convolution and the integrand of Parseval's theorem."
+    reproduces: "One convolution two ways; a difference equation with a step input; z/((z − 1)(z − 2)) inverted by partial fractions, long division and residues; the repeated-pole example; Parseval's theorem; the practice-exercise inversion."
+  - number: 5
+    slug: "ch05"
+    title: "Realizations, State Variables, and the Sample-and-Hold"
+    summary: "From a transfer function to a diagram we can build, the state variables its delays hold, and the sample-and-hold as an ideal sampler followed by a zero-order hold."
+    notebook: "notebooks/ch05.ipynb"
+    python: "python/ch05_realizations.py"
+    matlab: "matlab/ch05_realizations.m"
+    video: ""
+    figure: "python/figures/ch05_realizations.png"
+    figure_alt: "Step response of one transfer function run three ways, and two different signals with the same samples."
+    reproduces: "G(z) = (z + 0.5)/(z² − 0.75z + 0.125) run as the direct form, the two-delay form and the state equations, which all give the same output; C(zI − A)⁻¹B = G(z); the sampled-signal table on 1/((s + 1)(s + 2)) with _T_ = ln 2; a ramp through the hold and the bound on the hold error."
+  - number: 6
+    slug: "ch06"
+    title: "The Starred Transform, Aliasing, and the Zero-Order Hold"
+    summary: "The ideal sampler and the starred transform, the sampling theorem, aliasing, hidden oscillations, and the zero-order hold in time and in frequency."
+    notebook: "notebooks/ch06.ipynb"
+    python: "python/ch06_starred_aliasing.py"
+    matlab: "matlab/ch06_starred_aliasing.m"
+    video: ""
+    figure: "python/figures/ch06_aliasing_zoh.png"
+    figure_alt: "Two sinusoids with the same samples, and the magnitude of the zero-order hold."
+    reproduces: "Starred transforms by series and by residues; an example with a delay, where residues on E(s) as it stands give wrong samples and taking the delay out first fixes them; aliasing (7 Hz and 3 Hz sampled at 10 Hz) and hidden oscillations; the gain and phase of the zero-order hold at 1 Hz and 5 Hz for _T_ = 0.1 s."
+  - number: 7
+    slug: "ch07"
+    title: "Data Reconstruction and Data Holds"
+    summary: "Turning samples back into a signal: the zero-order, first-order and fractional-order holds, and the phase each one costs."
+    notebook: "notebooks/ch07.ipynb"
+    python: "python/ch07_holds.py"
+    matlab: "matlab/ch07_holds.m"
+    video: ""
+    figure: "python/figures/ch07_holds.png"
+    figure_alt: "A signal reconstructed by three data holds, and the magnitudes of the holds."
+    reproduces: "Gain and phase of the zero-order, fractional-order (β = 0.5) and first-order holds at ωT = 0.5 and at half the sampling frequency; the frequency where the lags of the zero- and first-order holds are equal; the peak gain of the first-order hold; the images of a held sinusoid; the low-frequency delay (1 − β)_T_/2."
+  - number: 8
+    slug: "ch08"
+    title: "Open-Loop Sampled-Data Systems"
+    summary: "From the starred transform to E(z), the pulse transfer function, where the samplers sit, digital filters, and how large _T_ may be."
+    notebook: "notebooks/ch08.ipynb"
+    python: "python/ch08_open_loop.py"
+    matlab: "matlab/ch08_open_loop.m"
+    video: ""
+    figure: "python/figures/ch08_how_large_T.png"
+    figure_alt: "Continuous output and its samples for two sampling periods."
+    reproduces: "E(z) of 1/((s + 1)(s + 2)) at _T_ = 0.5 s; the pulse transfer function of a zero-order hold and 1/(s + 1) by brute force and by exact discretization, its step samples and DC gain; where the samplers sit; the digital-filter example; how large _T_ may be for 25/(s² + 2s + 25), with the true peak against the samples."
+  - number: 9
+    slug: "ch09"
+    title: "The Modified _z_-Transform and Closed-Loop Systems"
+    summary: "Seeing between the samples, delays that are not whole periods, and closing the loop with two signal flow graphs and Mason's gain formula."
+    notebook: "notebooks/ch09.ipynb"
+    python: "python/ch09_modified_z.py"
+    matlab: "matlab/ch09_modified_z.m"
+    video: ""
+    figure: "python/figures/ch09_modified_z.png"
+    figure_alt: "The output between the samples, and a loop with two samplers that are not synchronized."
+    reproduces: "Three examples of the modified _z_-transform, with step samples; two samplers that are not synchronized; closed loops checked by simulating the sampled loop with the plant integrated exactly."
+  - number: 10
+    slug: "ch10"
+    title: "Closed-Loop Time Response and Steady-State Accuracy"
+    summary: "Reading the response from the closed-loop poles, the characteristic equation, the effect of _T_, and the error constants."
+    notebook: "notebooks/ch10.ipynb"
+    python: "python/ch10_time_response.py"
+    matlab: "matlab/ch10_time_response.m"
+    video: ""
+    figure: "python/figures/ch10_time_response.png"
+    figure_alt: "Closed-loop step response between the samples, and for several sampling periods."
+    reproduces: "A first-order plant at _T_ = 0.1 s; the loop 1/(s(s + 1)) at _T_ = 1 s (damping ratio, natural frequency, time constant, and the peak at the samples and between them); the effect of _T_ and the limit _T_ = 3.92 s; a digital integrator; the gain limits of the laser loop; the practice exercise."
+  - number: 11
+    slug: "ch11"
+    title: "Stability of Sampled-Data Systems"
+    summary: "Every closed-loop pole inside the unit circle, and how to test that without solving for the poles: the bilinear transformation with Routh–Hurwitz, and Jury's test."
+    notebook: "notebooks/ch11.ipynb"
+    python: "python/ch11_stability.py"
+    matlab: "matlab/ch11_stability.m"
+    video: ""
+    figure: "python/figures/ch11_stability.png"
+    figure_alt: "Largest pole magnitude against the gain K, and the stability triangle of the second-order test."
+    reproduces: "The sampled integrator; a Routh-array routine with the epsilon rule and the auxiliary polynomial; the bilinear substitution with Routh, and Jury's table, on the running loop, on the loop with one sample of delay, on the laser loop and on the practice exercise, each cross-checked with the roots."
+  - number: 12
+    slug: "ch12"
+    title: "Root Locus and Frequency Response of Sampled-Data Loops"
+    summary: "The root locus in the _z_-plane, read against the unit circle, and stability margins from the _w_-plane, Bode plots and the Nyquist criterion."
+    notebook: "notebooks/ch12.ipynb"
+    python: "python/ch12_root_locus_frequency.py"
+    matlab: "matlab/ch12_root_locus_frequency.m"
+    video: ""
+    figure: "python/ch12_figures/ch12_root_locus.png"
+    figure_alt: "Root locus in the z-plane of a zero-order hold and 1/(s(s + 1)) with T = 1 s, with the unit circle."
+    reproduces: "Root locus of the running loop (breakaway point and the gain where it crosses the unit circle); the gain for a damping ratio of 0.5; the effect of _T_ on the critical gain; the _w_-plane Bode plot with its gain and phase margins; the Nyquist plot."
+  - number: 13
+    slug: "ch13"
+    title: "Designing Digital Controllers"
+    summary: "Two ways to get D(z): emulation (Euler, Tustin, matched pole–zero, zero-order-hold rules, a digital PID) and direct design in _z_, including deadbeat."
+    notebook: "notebooks/ch13.ipynb"
+    python: "python/ch13_controller_design.py"
+    matlab: "matlab/ch13_controller_design.m"
+    video: ""
+    figure: "python/figures/ch13_emulation.png"
+    figure_alt: "Step responses of the same analog lead controller emulated at two sampling periods."
+    reproduces: "One lead compensator converted six ways (Euler, Tustin, prewarped Tustin, matched pole–zero, zero-order-hold equivalent) and the closed-loop responses; a digital PID with a derivative filter; a lead designed directly in _z_ for the running plant; deadbeat designs with and without ripple between the samples."
+  - number: 14
+    slug: "ch14"
+    title: "State-Space Design: Pole Placement, Observers, and Optimal Control"
+    summary: "The exact sampled state model, pole placement, prediction and current observers, the separation principle, and the discrete linear-quadratic regulator."
+    notebook: "notebooks/ch14.ipynb"
+    python: "python/ch14_state_space.py"
+    matlab: "matlab/ch14_state_space.m"
+    video: ""
+    figure: "python/ch14_figures/ch14_pole_placement.png"
+    figure_alt: "Regulation from an initial state by pole placement and by deadbeat state feedback, with the held control signal."
+    reproduces: "Φ and Γ of the running plant; controllability and observability; pole placement by Ackermann's formula; deadbeat feedback; reference gain and integral action; prediction and current observers; the controller–observer as D(z); the discrete LQR by Riccati iteration."
+  - number: 15
+    slug: "ch15"
+    title: "Implementing Digital Controllers"
+    summary: "From paper to processor: choosing _T_, the anti-aliasing filter and computation delay, finite word length and limit cycles, saturation and windup."
+    notebook: "notebooks/ch15.ipynb"
+    python: "python/ch15_implementation.py"
+    matlab: "matlab/ch15_implementation.m"
+    video: ""
+    figure: "python/ch15_figures/ch15_pm_vs_T.png"
+    figure_alt: "Phase margin against the sampling period, with the hold alone and with the hold and an anti-aliasing prefilter."
+    reproduces: "Choosing _T_; the anti-aliasing prefilter and its phase; one sample of computation delay; quantization noise gains; coefficient rounding in direct and cascade forms; deadband and limit cycles; integrator windup and two anti-windup schemes."
+  - number: 16
+    slug: "ch16"
+    title: "How Fast Must Networked Agents Sample? Denser Networks Require Faster Agents"
+    summary: "Agents that update every _T_ seconds and agree through a graph: the largest Laplacian eigenvalue sets the bound on _T_, so denser networks require faster agents; with noise, a dense network loses to a sparse one when the agents are slow."
+    notebook: "notebooks/ch16.ipynb"
+    python: "python/ch16_networks_sampling.py"
+    matlab: "matlab/ch16_networks_sampling.m"
+    video: ""
+    figure: "python/ch16_figures/ch16_tmax_vs_lmax.png"
+    figure_alt: "Largest stable update period against the largest Laplacian eigenvalue for path, ring, star and complete graphs."
+    reproduces: "Laplacian eigenvalues of path, ring, star and complete graphs; the largest stable update period of each consensus mode and of the whole network; fast and slow agents simulated; links added one at a time; a vehicle platoon; the noise variance of each mode from the discrete Lyapunov equation, and where sparse and dense networks cross."
+
+appendices:
+  - letter: "A"
+    title: "A Quick Review of the Laplace Transform"
+    summary: "The definition, the properties used in the course, a table of transform pairs, and one differential equation solved with them."
+  - letter: "B"
+    title: "Tables and Formulas"
+    summary: "_z_-transform and modified _z_-transform pairs, zero-order-hold equivalents, the map z = e^(sT), error constants, stability tests, discretization maps, and the notation."

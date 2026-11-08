@@ -1,0 +1,8 @@
+# Permanent addresses for "Computers in the Loop" (Milad Siami)
+#   https://w3id.org/citl          -> the book's website
+#   https://w3id.org/citl/ch08     -> the page for Chapter 8 (notebooks, scripts, video)
+Options +FollowSymLinks
+RewriteEngine on
+RewriteRule ^$ https://SiamiLab.github.io/computers-in-the-loop/ [R=302,L]
+RewriteRule ^(ch[0-9][0-9])/?$ https://SiamiLab.github.io/computers-in-the-loop/$1/ [R=302,L]
+RewriteRule ^(ch[0-9][0-9])/colab/?$ https://colab.research.google.com/github/SiamiLab/computers-in-the-loop/blob/main/notebooks/$1.ipynb [R=302,L]
