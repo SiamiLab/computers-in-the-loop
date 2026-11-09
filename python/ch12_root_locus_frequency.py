@@ -1,4 +1,4 @@
-"""EECE 5610, Chapter 12: root locus and frequency response of sampled-data loops.
+"""Chapter 12 companion: root locus and frequency response of sampled-data loops.
 
 The running example of the chapter: a zero-order hold in front of Gp(s) = 1/(s(s+1)),
 sampled with T = 1 s, a gain K and unity feedback.

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""EECE 5610, Chapter 14 companion: state-space design for a sampled plant.
+"""Chapter 14 companion: state-space design for a sampled plant.
 
 The running example is a ZOH followed by G_p(s) = 1/(s(s+1)), sampled at T = 1 s,
 with states x1 = c (position) and x2 = dc/dt (velocity).

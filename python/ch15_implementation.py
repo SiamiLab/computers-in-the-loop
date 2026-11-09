@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""EECE 5610, Chapter 15 companion: implementing digital controllers.
+"""Chapter 15 companion: implementing digital controllers.
 
 Run it with
     python3 ch15_implementation.py

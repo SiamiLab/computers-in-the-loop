@@ -2,8 +2,11 @@
 
 For a > 0, an analog integral controller K/s around 1/(s+a) is stable for every K > 0.
 Put the same controller on a computer (sample, hold, integrate with the
-rectangle rule) and the loop degrades as the sampling period T grows, and is
-unstable for T > 4/a.  This script reproduces the numbers of the chapter:
+rectangle rule) and the loop degrades as the sampling period T grows.  The
+closed-loop polynomial is z^2 - (1+p) z + p + K T b, and the Jury test gives
+stability exactly for T < a/K (any a, K > 0).  For the critically damped design
+K = a^2/4 used here, that limit is T < 4/a (2 s for a = 2).
+This script reproduces the numbers of the chapter:
 
   * the analog design (a = 2, K = 1): y(t) = 1 - (1 + t) e^{-t}
   * the digital loop  u_k = u_{k-1} + K T e_{k-1},  y_{k+1} = p y_k + b u_k

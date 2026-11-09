@@ -22,6 +22,45 @@ def code(text):
             "source": text.strip("\n").splitlines(True)}
 
 
+BROWSER_SETUP = ("# In the browser (JupyterLite), hide a harmless Matplotlib warning from its in-browser backend.\n"
+                 "import sys, warnings\n"
+                 "if \"pyodide\" in sys.modules:\n"
+                 "    warnings.filterwarnings(\"ignore\", message=r\"The \\w+ parameter as float was deprecated\")\n")
+
+
+def with_ids(cells, name):
+    """Give every cell a stable id (nbformat 4.5 requires one), e.g. ch07-012."""
+    for i, c in enumerate(cells):
+        c["id"] = f"{name}-{i:03d}"
+    return cells
+
+
+def show_before_close(body):
+    """In a notebook, display each figure before the script closes it (scripts only save it)."""
+    body = re.sub(r"^([ \t]*)plt\.close\((\w+)\)", r"\1display(\2)\n\1plt.close(\2)", body, flags=re.M)
+    if "display(" in body:
+        body = "from IPython.display import display\n" + body
+    return body
+
+
+def keep_figures_whole(cells):
+    """Merge cells so that each figure is built, shown and closed in one cell.
+
+    Otherwise Jupyter would show a half-drawn figure at the end of the cell that created it."""
+    opened = re.compile(r"plt\.(subplots|figure)\(")
+    closed = re.compile(r"^\s*(plt\.close|save)\(fig", re.M)
+    merged, buf, open_figs = [], "", 0
+    for c in cells:
+        buf += ("\n" if buf else "") + c
+        if not c.lstrip().startswith("def "):
+            open_figs = max(0, open_figs + len(opened.findall(c)) - len(closed.findall(c)))
+        if open_figs == 0:
+            merged.append(buf); buf = ""
+    if buf:
+        merged.append(buf)
+    return merged
+
+
 def split_cells(body):
     tree = ast.parse(body)
     lines = body.splitlines(True)
@@ -85,12 +124,13 @@ def handson_cells(py):
 
 
 def convert(py):
-    text = py.read_text()
+    text = re.sub(r"^#!.*\n", "", py.read_text())      # drop a "#!/usr/bin/env python3" line
     m = re.match(r'\s*"""(.*?)"""\n', text, re.S)
     doc, body = (m.group(1), text[m.end():]) if m else ("", text)
     body = re.sub(r'^matplotlib\.use\("Agg"\).*\n', "", body, flags=re.M)
     body = body.replace("Path(__file__).resolve().parent", "Path.cwd()")
     body = body.replace("os.path.dirname(os.path.abspath(__file__))", "os.getcwd()")
+    body = show_before_close(body)
     title = doc.strip().splitlines()[0] if doc.strip() else py.stem
     rest = "\n".join(doc.strip().splitlines()[1:]).strip()
     rest = re.sub(r"\n\s*Run:.*", "", rest, flags=re.S)
@@ -100,13 +140,16 @@ def convert(py):
                 "all credits are in `ATTRIBUTION.md`.\n\n"
                 f"{rest}\n\nRun the cells from top to bottom "
                 "(in Colab: *Runtime > Run all*). Figures are also saved to a `figures` folder.\n")]
-    cells += [code(c) for c in split_cells(body)]
+    parts = split_cells(body)
+    if "plt.close(" in body:
+        parts = keep_figures_whole(parts)
+    cells += [code(BROWSER_SETUP)] + [code(c) for c in parts]
     cells += explore_cells(py)
     cells += handson_cells(py)
-    nb = {"cells": cells, "metadata": {"kernelspec": {"name": "python3", "display_name": "Python 3",
+    name = py.stem.split("_")[0]          # ch01, ch02, ...
+    nb = {"cells": with_ids(cells, name), "metadata": {"kernelspec": {"name": "python3", "display_name": "Python 3",
           "language": "python"}, "language_info": {"name": "python"},
           "authors": [{"name": "Milad Siami"}]}, "nbformat": 4, "nbformat_minor": 5}
-    name = py.stem.split("_")[0]          # ch01, ch02, ...
     out = OUT / f"{name}.ipynb"
     out.write_text(json.dumps(nb, indent=1))
     return out
@@ -130,12 +173,12 @@ def activity_notebooks():
                     'State your prediction and assumptions before running the experiment.'+related+'\n\n'
                     'Run the setup cells, inspect the named case function, and change one parameter at a time. '
                     'All experiments are mathematical simulations; no hardware is connected.'),
-                 code('%matplotlib inline')]
+                 code('%matplotlib inline'), code(BROWSER_SETUP)]
         cells += [code(c) for c in split_cells(body)]
         cells += [md(f'## Run case {n}\n\nChange the keyword arguments below to investigate the assigned variation. '
                      f'Use `help(case{n:02d})` or inspect its definition for available parameters.'),
                   code(f'result = run_case({n})\nfrom IPython.display import display, Image\ndisplay(Image(filename=str(OUT / "case{n:02d}.png")))\nresult')]
-        nb = {'cells':cells,'metadata':{'kernelspec':{'name':'python3','display_name':'Python 3','language':'python'},
+        nb = {'cells':with_ids(cells, f'activity-ch{n:02d}'),'metadata':{'kernelspec':{'name':'python3','display_name':'Python 3','language':'python'},
                'language_info':{'name':'python'},'authors':[{'name':'Milad Siami'}]},'nbformat':4,'nbformat_minor':5}
         out=destination/f'activity_ch{n:02d}.ipynb';out.write_text(json.dumps(nb,indent=1));print(out.name)
 

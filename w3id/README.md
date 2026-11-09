@@ -4,16 +4,10 @@ The QR codes in the lecture notes point to `https://w3id.org/citl/chNN`. w3id.or
 community-run permanent-address service: it redirects to wherever the material lives now, so
 printed QR codes keep working if the hosting changes.
 
-## Register (once)
+## Status
 
-1. Fork https://github.com/perma-id/w3id.org on GitHub.
-2. Copy `citl/.htaccess` to `ids/citl/.htaccess` in your fork (w3id keeps each identifier
-   under `ids/`; the contact details are in the file's comments).
-3. Open a pull request titled "Add citl (Computers in the Loop)". It is usually merged within a
-   few days.
-4. Test: https://w3id.org/citl/ch01 should open the Chapter 1 page.
+Registered: `ids/citl/.htaccess` in https://github.com/perma-id/w3id.org (merged November 2026).
+https://w3id.org/citl/ch01 opens the Chapter 1 page, and likewise for every chapter.
 
-The QR codes are already printed in the notes; they start working once the pull request is merged.
-
-If the site moves, edit the target addresses in `.htaccess` (another small pull request); the
-QR codes in the notes do not change.
+If the site moves, edit the target addresses in `citl/.htaccess` here and in `ids/citl/.htaccess`
+at w3id.org (a small pull request there); the QR codes in the notes do not change.

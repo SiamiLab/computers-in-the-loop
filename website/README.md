@@ -6,8 +6,9 @@ its notebook (in Colab, or in the browser with no login), the Python and MATLAB 
 link for reporting a correction. Each chapter page lives at `.../chNN/`, which is where the QR
 code printed in the notes points.
 
-> **Status: built and checked locally only. Nothing has been published, and the deploy
-> workflow (`.github/workflows/deploy.yml`) has not been run yet.**
+> **Status:** published at https://siamilab.github.io/computers-in-the-loop/ by the deploy
+> workflow (`.github/workflows/deploy.yml`) on every push to `main`. The QR codes in the notes
+> reach the chapter pages through https://w3id.org/citl/chNN.
 
 ## Files
 
@@ -17,7 +18,7 @@ code printed in the notes points.
 | `build_site.py` | Writes the site to `_site/` from `site.yml`. Standard library only (uses PyYAML if installed). |
 | `style.css` | The look: system fonts for the interface, Charter/Georgia for reading, orange accent, phone first, dark mode. |
 | `check_links.py` | Checks every relative link, image and `#anchor` in `_site/`, and that the HTML tags are balanced. |
-| `../.github/workflows/deploy.yml` | Builds and publishes the site with GitHub Pages on every push to `main`. **Not yet run.** |
+| `../.github/workflows/deploy.yml` | Builds and publishes the site with GitHub Pages on every push to `main`. |
 
 The pages use no JavaScript and load nothing from other servers.
 

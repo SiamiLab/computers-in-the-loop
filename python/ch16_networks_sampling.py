@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""EECE 5610, Chapter 16 companion: how fast must networked agents sample?
+"""Chapter 16 companion: how fast must networked agents sample?
 
 Run it with
     python3 ch16_networks_sampling.py

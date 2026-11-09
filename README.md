@@ -17,7 +17,7 @@ behind it, and the website.
 |---|---|
 | **Google Colab** | A Google account. Open `notebooks/chNN.ipynb` from the chapter page and choose *Runtime > Run all*. |
 | **In your browser** | Nothing. The chapter page has a "Run in your browser" button (JupyterLite); the first start takes a minute. |
-| **On your computer** | Python 3.9 or later: `python -m pip install -r requirements.txt`, then `python run_chapter.py 6` (or open the notebook in Jupyter). |
+| **On your computer** | Python 3.9 or later. For the scripts: `python -m pip install -r requirements.txt`, then `python run_chapter.py 6`. For the notebooks (adds Jupyter and the sliders): `python -m pip install -r requirements-notebooks.txt`, then `jupyter notebook notebooks/ch06.ipynb`. |
 | **MATLAB** | `matlab/chNN_*.m`, run from the `matlab` folder. |
 
 Each notebook has three parts:
