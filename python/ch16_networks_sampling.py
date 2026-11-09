@@ -19,6 +19,7 @@ m = -Lx x - Lv v. Requires numpy, scipy and matplotlib. Change the CAPITAL const
 import itertools
 import math
 import os
+import warnings
 
 import numpy as np
 from scipy import linalg, optimize
@@ -36,7 +37,9 @@ AGENTS = ["#1D5FA8", "#C8102E", "#2E7D32", "#E67E22", "#1F2A33"]   # agents 1-5,
 
 def save(fig, name):
     path = os.path.join(OUT, name)
-    fig.tight_layout()
+    with warnings.catch_warnings():       # the graph row's equal-aspect axes; the layout is fine
+        warnings.filterwarnings("ignore", message="This figure includes Axes that are not compatible")
+        fig.tight_layout()
     fig.savefig(path, dpi=150)
     plt.close(fig)
     print(f"  saved {path}")
